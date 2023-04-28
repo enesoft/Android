@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">TextScanPro</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="register_message">New here? <a href="activity_register">Register</a> now.</string>
+    <string name="login_message"> Already registered? <a href="activity_login">Login</a> and start exploring.</string>
+    <string name="home">Home</string>
+    <string name="profile">Me</string>
+    <string name="camera">Camera</string>
+    <string name="retake">Retake</string>
+    <string name="socialLogin">or sign in with</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

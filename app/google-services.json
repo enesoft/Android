@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "84783421358",
+    "project_id": "textscanpro",
+    "storage_bucket": "textscanpro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:84783421358:android:47989d831cc6463b7b1a3f",
+        "android_client_info": {
+          "package_name": "com.example.textscanpro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "84783421358-9qeqh3jms222o4l4nah026qmd78le7pa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.textscanpro",
+            "certificate_hash": "5217dfab323b8b7b86f0e4f18b21124a3c508edc"
+          }
+        },
+        {
+          "client_id": "84783421358-5pi9vc40eqp77aca8qpf958s89ism0o4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4tS9h9cr9u1xaktr1ZeSbHFyWkAH9VYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "84783421358-3akkl40231so82ri8psnopncd8d1d1lb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

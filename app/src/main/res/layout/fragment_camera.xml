@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:context=".Camera">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/cameraView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/cameraButton"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:src="@drawable/baseline_camera_alt_24"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="24dp" />
+
+    <ImageView
+        android:id="@+id/capturedImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+
+    <View
+        android:id="@+id/cameraTopView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/darkGray"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/exit"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/baseline_keyboard_arrow_left_24"
+        android:paddingTop="10dp"
+        android:visibility="invisible"
+        />
+
+    <ImageView
+        android:id="@+id/saveButton"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:src="@drawable/baseline_save_alt_24"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="30dp"
+        android:visibility="invisible"/>
+
+</FrameLayout>
