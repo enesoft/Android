@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import android.Manifest
+import android.content.ContentValues
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
@@ -21,10 +22,19 @@ import android.icu.text.SimpleDateFormat
 import android.media.ExifInterface
 import android.media.MediaScannerConnection
 import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.camera.core.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import java.io.File
+import java.io.FileInputStream
+import java.io.IOException
 import java.util.*
 
 
@@ -36,11 +46,17 @@ class Camera : Fragment() {
     private lateinit var exitPhoto : ImageView
     private lateinit var exitView : View
     private lateinit var savePhoto : ImageView
+    private lateinit var storage: FirebaseStorage
 
     companion object {
         private const val REQUEST_CAMERA_PERMISSION = 10
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val TAG = "CameraActivity"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        storage = FirebaseStorage.getInstance()
     }
 
     override fun onCreateView(
@@ -105,6 +121,7 @@ class Camera : Fragment() {
                 }
 
             imageCapture = ImageCapture.Builder()
+                .setTargetRotation(cameraView.display.rotation)
                 .build()
 
             val cameraSelector = CameraSelector.Builder()
@@ -124,10 +141,11 @@ class Camera : Fragment() {
     }
 
     private fun takePhoto() {
-        val photoFile = File(requireContext().externalMediaDirs.first(), "${SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())}.jpg")
+        val photoFile = File(requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "textscanpro_${SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())}.jpg")
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
         imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(requireContext()), object : ImageCapture.OnImageSavedCallback {
+            @RequiresApi(Build.VERSION_CODES.Q)
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                 // The image has been captured and saved, so we can now do something with it
                 val savedUri = Uri.fromFile(photoFile)
@@ -160,8 +178,30 @@ class Camera : Fragment() {
                 }
 
                 savePhoto.setOnClickListener{
-                    MediaScannerConnection.scanFile(requireContext(), arrayOf(photoFile.absolutePath), arrayOf("image/jpeg"), null)
-                    Toast.makeText(requireContext(), "Photo saved to ${photoFile.absolutePath}", Toast.LENGTH_SHORT).show()
+                    val contentValues = ContentValues().apply {
+                        put(MediaStore.Images.Media.DISPLAY_NAME, photoFile.name)
+                        put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+                        put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+                    }
+                    val contentResolver = requireContext().contentResolver
+                    var uri: Uri? = null
+                    try {
+                        val imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                        if (imageUri != null) {
+                            val outputStream = contentResolver.openOutputStream(imageUri)
+                            val inputStream = FileInputStream(photoFile)
+                            outputStream?.use { outputStream ->
+                                inputStream.use { inputStream ->
+                                    inputStream.copyTo(outputStream)
+                                }
+                            }
+                            uri = imageUri
+                            Log.d(TAG, "Photo saved to gallery: $uri")
+                        }
+                    } catch (e: IOException) {
+                        Log.e(TAG, "Error saving photo to gallery", e)
+                    }
+
                     imageView?.setImageBitmap(null)
                     exitPhoto.visibility = View.GONE
                     exitView.visibility = View.GONE

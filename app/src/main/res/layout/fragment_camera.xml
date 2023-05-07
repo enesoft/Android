@@ -43,8 +43,8 @@
 
     <ImageView
         android:id="@+id/saveButton"
-        android:layout_width="60sp"
-        android:layout_height="60sp"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
         android:src="@drawable/baseline_save_alt_24"
         android:layout_gravity="bottom"
         android:layout_marginBottom="24dp"

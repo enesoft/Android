@@ -11,7 +11,23 @@
     <string name="profile">Me</string>
     <string name="camera">Camera</string>
     <string name="retake">Retake</string>
+    <string name="photo_preview">Photo preview</string>
     <string name="socialLogin">or sign in with</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title">Title</string>
+    <string name="logout">Logout</string>
+    <string name="changeName">Change Name</string>
+    <string name="changePasscode">Change Passcode</string>
+    <string name="changeEmail">Change Email</string>
+    <string name="profile_photo">Profile photo</string>
+    <string name="save">Save</string>
+    <string name="enter_new_email_address">Enter new email address</string>
+    <string name="change_email">Change Email</string>
+    <string name="change_password">Change password</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="enter_new_name">Enter new name</string>
+    <string name="confirm_new_password">Confirm new password</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="enter_photo_name">Enter photo name</string>
 </resources>
