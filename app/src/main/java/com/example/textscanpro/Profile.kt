@@ -6,20 +6,28 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+
 
 class Profile : Fragment() {
 
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var googleAuth : GoogleSignIn
     private lateinit var profilePhotoImageView: ImageView
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var emailPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +35,7 @@ class Profile : Fragment() {
         }
 
         sharedPreferences = requireActivity().getSharedPreferences("isMaleSelected", Context.MODE_PRIVATE)
+        emailPreferences = requireActivity().getSharedPreferences("email", Context.MODE_PRIVATE)
     }
 
     @SuppressLint("SetTextI18n")
@@ -38,7 +47,12 @@ class Profile : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         val userEmail = rootView.findViewById<TextView>(R.id.emailId)
-        userEmail.text = "Welcome, " + firebaseAuth.currentUser?.email
+
+        if (firebaseAuth.currentUser == null){
+            userEmail.text = "Welcome, " + emailPreferences.getString("email", null)
+        }else{
+            userEmail.text = "Welcome, " + firebaseAuth.currentUser?.email
+        }
 
         profilePhotoImageView = rootView.findViewById(R.id.profilePhoto)
         val isMaleSelected = sharedPreferences.getBoolean("isMaleSelected", true)
